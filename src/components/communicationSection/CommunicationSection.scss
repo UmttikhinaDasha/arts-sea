@@ -1,0 +1,12 @@
+@import "../../index.scss";
+
+.modal__communication-section {
+  min-width: 320px;
+  max-width: 500px;
+  // flex: 320px 1;
+}
+
+.modal__toggle-comm-block-btn {
+  @extend %text-btn;
+  margin-bottom: 12px;
+}

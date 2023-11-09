@@ -1,0 +1,37 @@
+@import "../../index.scss";
+
+.auction {
+  &__support {
+    display: flex;
+    font-size: 16px;
+    margin-bottom: 8px;
+    align-items: center;
+    gap: 18px;
+    justify-content: center;
+  
+    & span {
+      font-weight: 600;
+    }
+  }
+  &__support-btn {
+    @extend %icon-btn;
+  }
+  &__support-icon {
+    @extend %icon;
+  }
+
+  &__start-bid-btn, &__min-incr-btn, &__auto-buy-btn {
+    @extend %text-btn;
+    font-size: 12px;
+  }
+
+  .auction__bids-list {
+    align-items: center;
+    list-style-type: none;
+    overflow-y: auto;
+  }
+
+  .auction__bid {
+    align-self: center;
+  }
+}

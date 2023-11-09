@@ -1,0 +1,45 @@
+@import "../../index.scss";
+
+.search {
+  position: static;
+  width: 100%;
+  z-index: 1;
+}
+
+.search__container {
+  @extend %flex-row-container;
+  gap: 10px;
+  width: 100%;
+  padding: 5px 30px;
+  align-items: flex-start
+}
+
+.search__block {
+  flex-grow: 2;
+  flex-shrink: 0;
+}
+
+.filter-btn {
+  @extend %rounded-btn;
+
+  flex-basis: $search-height-sm;
+  flex-grow: 0;
+  flex-shrink: 0;
+  
+  height: $search-height-sm;
+  width: $search-height-sm;
+
+  text-align: center;
+
+  @media (min-width: 1024px) {
+    & {
+      flex-basis: $search-height-md;
+      height: $search-height-md;
+      width: $search-height-md;
+    }
+  }
+}
+
+.filter-icon {
+  @extend %icon;
+}

@@ -1,0 +1,32 @@
+@import "../../index.scss";
+
+.messanger-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: no-wrap;
+  margin-top: 20px;
+  justify-content: center;
+  gap: 20px;
+}
+
+.interlocutors-list-block {
+  overflow-y: auto;
+
+  @extend %base-elem-styles;
+  @extend %shadow-filter;
+
+  position: relative;
+
+  height: 85vh;
+  min-width: 320px;
+}
+
+.input-wrapper{
+  position: sticky;
+  top: 0;
+
+  padding: 10px 5px;
+  border: 1px solid $clr-border;
+  background-color: $base-bg-clr;
+}

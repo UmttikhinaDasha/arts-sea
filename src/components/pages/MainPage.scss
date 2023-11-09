@@ -1,0 +1,11 @@
+@import "../../index.scss";
+
+header {
+  position: fixed;
+  background-color: $base-bg-clr;
+  z-index: 2;
+}
+
+main {
+  padding-top: 150px;
+}
