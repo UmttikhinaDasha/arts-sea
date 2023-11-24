@@ -20,6 +20,7 @@ const Gallery:FC<GalleryProps> = (props) => {
            onClick={e => onSetModalOpen?.(img?.src)}>
         <img className='masonry-img'
              src={img?.src}
+            //  alt={img?.src}
           />
       </div>
     ));

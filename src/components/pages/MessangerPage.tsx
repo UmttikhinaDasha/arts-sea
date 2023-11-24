@@ -38,7 +38,7 @@ export const MessangerPage = () => {
   return (
     <>
       <header className="header" style={{position: "static", overflowX: "hidden"}}>
-        <Header menuLinks={['Главная', 'Профиль']}/>
+        <Header menuLinks={[{url:"/", name:"Главная"}, {url:"/users/0", name:"Профиль"}]}/>
       </header>
       <main className="main messanger-wrapper" style={{paddingTop: "0px"}}>
 

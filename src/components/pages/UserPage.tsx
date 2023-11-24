@@ -8,6 +8,9 @@ import Gallery from "../gallery/Gallery";
 import ArtInfoMW from "../artInfoMW/ArtInfoMW";
 import Wallpaper from "../wallpaper/Wallpaper";
 import UserInfoSection from "../userInfoSection/UserInfoSection";
+import PublishMW from "../publishMW/PublishMW";
+import PriceList from "../pricelistMW/PriselistMW";
+import FollowersMW from "../followersMW/FollowersMW";
 
 type User = {
   id: string;
@@ -29,6 +32,8 @@ export const UserPage = () => {
   const [imgSrc, setImgSrc] = useState<string>("./src/app/resources/images/default_hor.jpg"); //./src/assets/default_hor.jpg
   const debounceImgSrc = useDeferredValue(imgSrc);
 
+
+
   const onSetModalOpen = (imgSrc : string) => {
     setImgSrc(imgSrc);
     setModalClose(false);
@@ -48,18 +53,42 @@ export const UserPage = () => {
   const onSetPriceListModalClose = () => {
     setPriceListModalClose(true);
   }
+
+
+  const [publishModalClose, setPublishModalClose] = useState<boolean>(true);
+
+  const onSetPublishModalOpen = () => {
+    setPublishModalClose(false);
+  }
+
+  const onSetPublishModalClose = () => {
+    setPublishModalClose(true);
+  }
+
+  const [followersModalClose, setFollowersModalClose] = useState<boolean>(true);
+
+  const onSetFollowersModalOpen = () => {
+    setFollowersModalClose(false);
+  }
+
+  const onSetFollowersModalClose = () => {
+    setFollowersModalClose(true);
+  }
   //end-modal-block------------------------------------------------------
 
   return (
     <>
       <header className="header" style={{position: "static", overflowX: "hidden"}}>
-        <Header menuLinks={['Профиль', 'Сообщения']}/>
+        <Header menuLinks={[{url:"/", name:"Главная"}, {url:"/messanger", name:"Сообщения"}]}/>
         <Wallpaper wallpaper={userData?.wallpaper}/>
-        <UserInfoSection onSetModalOpen={onSetPriceListModalOpen}/>
+        <UserInfoSection onSetModalOpen={onSetPriceListModalOpen} onSetPublishModalOpen={onSetPublishModalOpen} onSetFollowersModalOpen={onSetFollowersModalOpen}/>
       </header>
       <main className="main" style={{paddingTop: "0px"}}>
         <Gallery onSetModalOpen={onSetModalOpen} images={userData?.arts}/>
         {modalClose ? null : <ArtInfoMW imgSrc={debounceImgSrc} onSetModalClose={onSetModalClose}/>}
+        {publishModalClose ? null : <PublishMW onSetModalClose={onSetPublishModalClose}/>}
+        {priceListModalClose ? null : <PriceList onSetModalClose={onSetPriceListModalClose}/>}
+        {followersModalClose ? null : <FollowersMW onSetModalClose={onSetFollowersModalClose}/>}
       </main>
     </>
   )

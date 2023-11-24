@@ -4,11 +4,13 @@ import { faStar, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import "./UserInfoSection.scss";
 
 interface UserInfoSectionProps {
-  onSetModalOpen?(imgSrc?: string): void;
+  onSetModalOpen?(): void;
+  onSetPublishModalOpen?(): void;
+  onSetFollowersModalOpen?(): void;
 }
 
 
-const UserInfoSection:FC<UserInfoSectionProps> = ({onSetModalOpen}) => {
+const UserInfoSection:FC<UserInfoSectionProps> = ({onSetModalOpen, onSetPublishModalOpen, onSetFollowersModalOpen}) => {
 
   const [rating, setRating] = useState<number>(4.5);
   const [followers, setFollowers] = useState<number>(10345);
@@ -34,8 +36,9 @@ const UserInfoSection:FC<UserInfoSectionProps> = ({onSetModalOpen}) => {
         </div>
 
         <div className="btns-container">
-          <button className="followers-btn">Подписчики</button>
-          <button className="followering-btn">Подписки</button>
+          <button onClick={onSetPublishModalOpen}>Опубликовать работу</button>
+          <button className="followers-btn" onClick={onSetFollowersModalOpen}>Подписчики</button>
+          <button className="followering-btn" onClick={onSetFollowersModalOpen}>Подписки</button>
           <button className="message-btn">Написать пользователю</button>
           <button className="open-pricelist-btn" onClick={e => onSetModalOpen?.()}>Открыть прайс-лист</button>
         </div>

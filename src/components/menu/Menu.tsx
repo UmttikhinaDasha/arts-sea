@@ -1,9 +1,10 @@
 import {FC, useEffect, useState, useRef} from "react";
+import { NavLink } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import "./Menu.scss";
 
 interface MenuProps {
-  links?: string[];
+  links?: [{url: string, name: string}];
 }
 
 const Menu:FC<MenuProps> = (props) => {
@@ -38,7 +39,7 @@ const Menu:FC<MenuProps> = (props) => {
       return (
         links?.map((link, i) => (
           <li key={i}>
-              <a href="#" className="header__link" tabIndex={0}>{link}</a>
+              <NavLink to={link.url} className="header__link">{link.name}</NavLink>
           </li>
         ))
       )

@@ -63,7 +63,7 @@ const MainPage = () => {
   return (
     <>
       <header className="header">
-        <Header menuLinks={['Профиль', 'Сообщения']}/>
+        <Header menuLinks={[{url:"/users/0", name:"Профиль"}, {url:"/messanger", name:"Сообщения"}]}/>
         <Search onSetSearchValue={onSetSearchValue}
                 onSetIsPopupOpen={onSetIsPopupOpen}
                 foundValues={foundContent} 

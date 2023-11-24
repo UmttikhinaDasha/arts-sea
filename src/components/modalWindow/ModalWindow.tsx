@@ -34,7 +34,9 @@ const ModalWindow:FC<ModalWindowProps> = (props) => {
   return (
     <div className="modal" onClick={e => onClickingOut(e)}>
       <div className="modal__dialog">
-        <FontAwesomeIcon icon={faXmark} className="modal__close" tabIndex={-1} onClick={e => onClickExit(e)}/>
+        <div className="close-wrapper">
+         <FontAwesomeIcon icon={faXmark} className="modal__close" tabIndex={-1} onClick={e => onClickExit(e)}/>
+        </div>
         <div className="modal__content">
 
           {props.children}

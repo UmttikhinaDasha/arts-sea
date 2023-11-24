@@ -5,6 +5,8 @@ const users = [
   {id: "2", userName: "otherOtherName", followers: [1], following: [0], rating: 5, wallpaper: `https://picsum.photos/200/${Math.floor(Math.random() * (300 - 200 + 1) + 200)}`, arts: [{id: 0, src: 'https://picsum.photos/200/209'}, {id: 1, src: 'https://picsum.photos/200/256'}]},
 ]
 
+const pricelist = [{id: 201, src:`https://picsum.photos/200/201`}, {id: 202, src:`https://picsum.photos/200/202`}];
+
 const interlocutors = [
   {id: 0, username: "Gojo Satoru", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoZQBfD_3lhmfbNG7RKfmPKry5ZGZxaJoQ2ukUD9PHkkvA9W1I_aVYq3qEmsSzwajSiVQ&usqp=CAU"},
   {id: 1, username: "Ieri Shoko", avatar: "https://i.pinimg.com/564x/77/ef/fa/77effa9b1af4918ab607ca40cf9f6860.jpg"},
@@ -66,4 +68,8 @@ export const getComments = () => {
 
 export const getInterlocutors = () => {
   return interlocutors;
+}
+
+export const getPriceList = () => {
+  return pricelist;
 }
