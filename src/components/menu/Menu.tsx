@@ -11,6 +11,8 @@ const Menu:FC<MenuProps> = (props) => {
 
   const {links} = props;
 
+  // const [isAuth, setIsAuth] = useState<boolean>(false);
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const burgerRef = useRef(null);
   

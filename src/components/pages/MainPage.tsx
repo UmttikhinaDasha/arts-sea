@@ -9,9 +9,21 @@ import FeedsSwitcher from "../feedsSwitcher/FeedsSwitcher";
 import Gallery from "../gallery/Gallery";
 import ArtInfoMW from "../artInfoMW/ArtInfoMW";
 
+import { useGetPostsQuery } from "../../features/api/apiSlice";
+
 import "./MainPage.scss";
 
 const MainPage = () => {
+
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetPostsQuery();
+
+  console.log(posts)
 
   const imagesData = useLoaderData();
   console.log(imagesData)
@@ -63,7 +75,7 @@ const MainPage = () => {
   return (
     <>
       <header className="header">
-        <Header menuLinks={[{url:"/users/0", name:"Профиль"}, {url:"/messanger", name:"Сообщения"}]}/>
+        <Header menuLinks={[{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}, {url:"/users/0", name:"Профиль"}, {url:"/messanger", name:"Сообщения"}]}/>
         <Search onSetSearchValue={onSetSearchValue}
                 onSetIsPopupOpen={onSetIsPopupOpen}
                 foundValues={foundContent} 
