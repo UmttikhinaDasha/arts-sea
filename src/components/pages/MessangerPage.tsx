@@ -9,11 +9,38 @@ import Chat from "../chat/Chat";
 import CommentsSection from "../commentsSection/CommentsSection";
 import InterlocutorItem from "../interlocutorItem/InterlocutorItem";
 
+import { useSelector } from "react-redux";
+import { selectIsActive, selectId } from "../../features/me/meSlice";
+import { useImQuery } from "../../features/api/authApiSlice";
+
+import { NavLink, useNavigate } from "react-router-dom";
+
 import "./MessangerPage.scss";
 
 export const MessangerPage = () => {
+  // const navigSate = useNavigate();
+  // const isActive = useSelector(selectIsActive)
+  // console.log(isActive)
+  // const id = useSelector(selectId)
+  // console.log(id)
+  // const menuLinks = isActive ? [{url:`/`, name:"Главная"}, {url:`/users/${id}`, name:"Профиль"}, {url:"/", name:"Выход"}] : 
+  // [{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]
+
+  const isActive = !!localStorage.getItem('user')
+  console.log(`isActive: ${isActive}`)
+  const me = useImQuery();
+  let menuLinks;
+  if (isActive) {
+    const id = me?.data?.id
+    console.log(`id: ${id}`)
+    menuLinks = [{url:`/`, name:"Главная"}, {url:`/users/${id}`, name:"Профиль"}, {url:"/", name:"Выход"}];
+  } else {
+    menuLinks = [{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]
+    // navigate('/')
+  }
+
   const interlocutorsData = useLoaderData();
-  console.log(interlocutorsData);
+  // console.log(interlocutorsData);
 
   //search-block---------------------------------------------------------
   const [searchValue, setSearchValue] = useState<string>('');
@@ -38,7 +65,7 @@ export const MessangerPage = () => {
   return (
     <>
       <header className="header" style={{position: "static", overflowX: "hidden"}}>
-        <Header menuLinks={[{url:"/", name:"Главная"}, {url:"/users/0", name:"Профиль"}]}/>
+        <Header menuLinks={menuLinks}/>
       </header>
       <main className="main messanger-wrapper" style={{paddingTop: "0px"}}>
 

@@ -18,6 +18,7 @@ const PublishMW:FC<PublishMWProps> = ({onSetModalClose}) => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const filePicker = useRef<HTMLInputElement | null>(null);
+  
   const {register, handleSubmit, formState: {errors, isSubmitSuccessful}} = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(selectedFile)

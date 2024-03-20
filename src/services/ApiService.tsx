@@ -13,14 +13,15 @@ const interlocutors = [
   {id: 2, username: "Geto Suguru", avatar: "https://i.pinimg.com/564x/9e/6e/f0/9e6ef0e2b9ffb83c05c2772442235b86.jpg"},
   {id: 3, username: "Fushiguro Toji", avatar: "https://i.pinimg.com/564x/b6/9c/1e/b69c1ee18c2ac5346fb23557e1afc8b6.jpg"},
 
-  {id: 0, username: "Gojo Satoru", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoZQBfD_3lhmfbNG7RKfmPKry5ZGZxaJoQ2ukUD9PHkkvA9W1I_aVYq3qEmsSzwajSiVQ&usqp=CAU"},
-  {id: 1, username: "Ieri Shoko", avatar: "https://i.pinimg.com/564x/77/ef/fa/77effa9b1af4918ab607ca40cf9f6860.jpg"},
-  {id: 2, username: "Geto Suguru", avatar: "https://i.pinimg.com/564x/9e/6e/f0/9e6ef0e2b9ffb83c05c2772442235b86.jpg"},
-  {id: 3, username: "Fushiguro Toji", avatar: "https://i.pinimg.com/564x/b6/9c/1e/b69c1ee18c2ac5346fb23557e1afc8b6.jpg"},
-  {id: 0, username: "Gojo Satoru", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoZQBfD_3lhmfbNG7RKfmPKry5ZGZxaJoQ2ukUD9PHkkvA9W1I_aVYq3qEmsSzwajSiVQ&usqp=CAU"},
-  {id: 1, username: "Ieri Shoko", avatar: "https://i.pinimg.com/564x/77/ef/fa/77effa9b1af4918ab607ca40cf9f6860.jpg"},
-  {id: 2, username: "Geto Suguru", avatar: "https://i.pinimg.com/564x/9e/6e/f0/9e6ef0e2b9ffb83c05c2772442235b86.jpg"},
-  {id: 3, username: "Fushiguro Toji", avatar: "https://i.pinimg.com/564x/b6/9c/1e/b69c1ee18c2ac5346fb23557e1afc8b6.jpg"},];
+  // {id: 0, username: "Gojo Satoru", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoZQBfD_3lhmfbNG7RKfmPKry5ZGZxaJoQ2ukUD9PHkkvA9W1I_aVYq3qEmsSzwajSiVQ&usqp=CAU"},
+  // {id: 1, username: "Ieri Shoko", avatar: "https://i.pinimg.com/564x/77/ef/fa/77effa9b1af4918ab607ca40cf9f6860.jpg"},
+  // {id: 2, username: "Geto Suguru", avatar: "https://i.pinimg.com/564x/9e/6e/f0/9e6ef0e2b9ffb83c05c2772442235b86.jpg"},
+  // {id: 3, username: "Fushiguro Toji", avatar: "https://i.pinimg.com/564x/b6/9c/1e/b69c1ee18c2ac5346fb23557e1afc8b6.jpg"},
+  // {id: 0, username: "Gojo Satoru", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoZQBfD_3lhmfbNG7RKfmPKry5ZGZxaJoQ2ukUD9PHkkvA9W1I_aVYq3qEmsSzwajSiVQ&usqp=CAU"},
+  // {id: 1, username: "Ieri Shoko", avatar: "https://i.pinimg.com/564x/77/ef/fa/77effa9b1af4918ab607ca40cf9f6860.jpg"},
+  // {id: 2, username: "Geto Suguru", avatar: "https://i.pinimg.com/564x/9e/6e/f0/9e6ef0e2b9ffb83c05c2772442235b86.jpg"},
+  // {id: 3, username: "Fushiguro Toji", avatar: "https://i.pinimg.com/564x/b6/9c/1e/b69c1ee18c2ac5346fb23557e1afc8b6.jpg"},
+];
 
 const bids = [{id:0, username: 'default-name', userPageLink: '#', bidValue: 30, currency: "usd"},
   {id:1, username: 'default-name', userPageLink: '#', bidValue: 35, currency: "usd"},

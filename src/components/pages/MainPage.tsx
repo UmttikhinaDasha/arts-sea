@@ -9,24 +9,29 @@ import FeedsSwitcher from "../feedsSwitcher/FeedsSwitcher";
 import Gallery from "../gallery/Gallery";
 import ArtInfoMW from "../artInfoMW/ArtInfoMW";
 
-import { useGetPostsQuery } from "../../features/api/apiSlice";
+import { useSelector } from "react-redux";
+import { selectIsActive, selectId } from "../../features/me/meSlice";
+import { useImQuery } from "../../features/api/authApiSlice";
+
 
 import "./MainPage.scss";
 
 const MainPage = () => {
 
-  const {
-    data: posts,
-    isLoading,
-    isSuccess,
-    isError,
-    error
-  } = useGetPostsQuery();
-
-  console.log(posts)
+  const isActive = !!localStorage.getItem('user')
+  console.log(`isActive: ${isActive}`)
+  const me = useImQuery();
+  let menuLinks;
+  if (isActive) {
+    const id = me?.data?.id
+    console.log(`id: ${id}`)
+    menuLinks = [{url:`/users/${id}`, name:"Профиль"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}];
+  } else {
+    menuLinks = [{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]
+  }
 
   const imagesData = useLoaderData();
-  console.log(imagesData)
+  // console.log(imagesData)
 
    //data-block-----------------------------------------------------------
    const tags = ['#uch', '#fantasy', '#modern', '#vampire', '#ciberpunk'];
@@ -75,7 +80,7 @@ const MainPage = () => {
   return (
     <>
       <header className="header">
-        <Header menuLinks={[{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}, {url:"/users/0", name:"Профиль"}, {url:"/messanger", name:"Сообщения"}]}/>
+        <Header menuLinks={menuLinks}/>
         <Search onSetSearchValue={onSetSearchValue}
                 onSetIsPopupOpen={onSetIsPopupOpen}
                 foundValues={foundContent} 

@@ -1,22 +1,42 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import "./AuthForm.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useLoginMutation, useImQuery } from "../../features/api/authApiSlice";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../features/auth/authSlice";
+import { setMe } from "../../features/me/meSlice";
+import { useState } from "react";
 
 type Inputs = {
-  email: string
+  username: string
   password: string
 }
 
 const AuthForm = () => {
+  const [error, setError] = useState('');
+
+  const navigate = useNavigate();
+  const [login, isFetching] = useLoginMutation();
+  const dispatch = useDispatch();
   const {register, handleSubmit, formState: {errors, isSubmitSuccessful}} = useForm<Inputs>({
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
     mode: 'onChange'
   });
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data)
+
+    try {
+      const userData = await login(data).unwrap()
+      dispatch(logIn({...userData}))
+      setError('')
+      navigate('/')
+    } catch (err) {
+      console.log(err)
+      setError(err?.data?.detail)
+    }
   };
 
   return (
@@ -25,17 +45,17 @@ const AuthForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
         
         <div>
-          <label htmlFor="email">Электронная почта:</label>
+          <label htmlFor="username">Имя пользователя:</label>
           <input
-            id="email"
-            className="auth-form__email-input"
-            type="email" 
-            placeholder="Введите почту" 
-            {...register( "email", {required: "Данное поле обязательно для заполнения"})}
-            aria-invalid={errors.email ? "true" : "false"} 
+            id="username"
+            className="auth-username-input"
+            type="text" 
+            placeholder="Введите имя" 
+            {...register( "username", {required: "Данное поле обязательно для заполнения"})}
+            aria-invalid={errors.username ? "true" : "false"} 
             />
         </div>
-        {errors.email?.type === "required" && <p role="alert" className="alert-msg">{errors.email.message}</p>}
+        {errors.username?.type === "required" && <p role="alert" className="alert-msg">{errors.username.message}</p>}
 
         <div>
           <label htmlFor="password">Пароль:</label>
@@ -52,7 +72,9 @@ const AuthForm = () => {
         
 
         <input type="submit" className="submit-btn"/>
-        {isSubmitSuccessful && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Данные успешно отправлены</p>}
+        {/* {isSubmitSuccessful && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Данные успешно отправлены</p>} */}
+        {isFetching && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Загрузка...</p>}
+        {error && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Неверный логин или пароль</p>}
       </form>
       <NavLink to="/registration" className="auth_link">Нет профиля? <span>Зарегистрируйтесь</span></NavLink>
     </div>

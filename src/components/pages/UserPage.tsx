@@ -1,5 +1,5 @@
 import { useState, useDeferredValue} from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 
 import { getUserById } from "../../services/ApiService";
 
@@ -11,6 +11,14 @@ import UserInfoSection from "../userInfoSection/UserInfoSection";
 import PublishMW from "../publishMW/PublishMW";
 import PriceList from "../pricelistMW/PriselistMW";
 import FollowersMW from "../followersMW/FollowersMW";
+import SettingProfileMW from "../settingProfileMW/SettingProfileMW";
+
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsActive, selectId } from "../../features/me/meSlice";
+import { useImQuery } from "../../features/api/authApiSlice";
+import { useGetUserQuery } from "../../features/user/userApiSlice";
+import { UseDispatch } from "react-redux";
+import { setMe } from "../../features/me/meSlice";
 
 type User = {
   id: string;
@@ -24,15 +32,47 @@ type User = {
 
 export const UserPage = () => {
 
-  const userData = useLoaderData();
-  console.log(userData.arts)
+  const dispatch = useDispatch();
+
+  let {userId} = useParams();
+  console.log(userId);
+
+  const isActive = !!localStorage.getItem('user')
+  console.log(`isActive: ${isActive}`)
+  const me = useImQuery();
+  if (me) {
+    console.log(me?.data)
+    dispatch(setMe(me?.data))
+  }
+
+  let menuLinks, myId;
+  let isMine = false;
+
+  if (isActive) {
+    myId = me?.data?.id
+    console.log(`id: ${myId}`)
+
+    if (userId == myId) {
+      isMine = true;
+      menuLinks = [{url:`/`, name:"Главная"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}];
+    } else {
+      menuLinks = [{url:`/`, name:"Главная"}, {url:`/users/${myId}`, name:"Профиль"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}];
+    }
+  } else {
+    menuLinks = [{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]
+  }
+
+  const {data: user, isFetching} = useGetUserQuery(userId);
+  console.log(user)
+
+  
+  // const userData = useLoaderData();
+  // console.log(userData.arts)
 
   //modal-block----------------------------------------------------------
   const [modalClose, setModalClose] = useState<boolean>(true);
   const [imgSrc, setImgSrc] = useState<string>("./src/app/resources/images/default_hor.jpg"); //./src/assets/default_hor.jpg
   const debounceImgSrc = useDeferredValue(imgSrc);
-
-
 
   const onSetModalOpen = (imgSrc : string) => {
     setImgSrc(imgSrc);
@@ -74,28 +114,40 @@ export const UserPage = () => {
   const onSetFollowersModalClose = () => {
     setFollowersModalClose(true);
   }
+
+  const [profileModalClose, setProfileModalClose] = useState<boolean>(true);
+
+  const onSetProfileModalOpen = () => {
+    setProfileModalClose(false);
+  }
+
+  const onSetProfileModalClose = () => {
+    setProfileModalClose(true);
+  }
   //end-modal-block------------------------------------------------------
 
   return (
     <>
       <header className="header" style={{position: "static", overflowX: "hidden"}}>
-        <Header menuLinks={[{url:"/", name:"Главная"}, {url:"/messanger", name:"Сообщения"}]}/>
-        <Wallpaper wallpaper={userData?.wallpaper}/>
-        <UserInfoSection onSetModalOpen={onSetPriceListModalOpen} onSetPublishModalOpen={onSetPublishModalOpen} onSetFollowersModalOpen={onSetFollowersModalOpen}/>
+        <Header menuLinks={menuLinks}/>
+        <Wallpaper wallpaper={user?.profile?.wallpaper}/>
+        <UserInfoSection isMine={isMine} user={user} onSetModalOpen={onSetPriceListModalOpen} onSetPublishModalOpen={onSetPublishModalOpen} onSetFollowersModalOpen={onSetFollowersModalOpen} onSetProfileModalOpen={onSetProfileModalOpen}/>
       </header>
       <main className="main" style={{paddingTop: "0px"}}>
-        <Gallery onSetModalOpen={onSetModalOpen} images={userData?.arts}/>
+        {/* <Gallery onSetModalOpen={onSetModalOpen} images={userData?.arts}/> */}
         {modalClose ? null : <ArtInfoMW imgSrc={debounceImgSrc} onSetModalClose={onSetModalClose}/>}
         {publishModalClose ? null : <PublishMW onSetModalClose={onSetPublishModalClose}/>}
         {priceListModalClose ? null : <PriceList onSetModalClose={onSetPriceListModalClose}/>}
         {followersModalClose ? null : <FollowersMW onSetModalClose={onSetFollowersModalClose}/>}
+        {profileModalClose ? null : <SettingProfileMW onSetModalClose={onSetProfileModalClose}/>}
       </main>
     </>
   )
 }
 
-export function loader({params}) {
-  const id = params?.userId;
-  console.log(id);
-  return getUserById(id);
-}
+// export function loader({params}) {
+//   const id = params?.userId;
+//   console.log("loader " + id);
+//   // const { data: post, isFetching, isSuccess } = useGetUserQuery(id);
+//   return id;
+// }

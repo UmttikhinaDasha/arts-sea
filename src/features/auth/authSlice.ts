@@ -1,39 +1,38 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-import axios from "../axios";
-
-export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (params) => {
-  const { data } = await axios.post('/auth/login', params);
-  return data;
-})
-
-const initialState = {
-  data: null,
-  status: 'loading',
-};
+import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: {accessToken: null, refreshToken: null},
   reducers: {
-    userLogged(state, action) {
-      state.data = action.payload
+    // signUp: (state, action) => {
+    //   // const { id } = action.payload
+    //   // state.user = id
+    // },
+    logIn: (state, action) => {
+      const { access, refresh } = action.payload
+      state.accessToken = access
+      state.refreshToken = refresh
+      localStorage.setItem('user', JSON.stringify({refresh}))
     },
-  },
-  // extraReducers: {
-  //   [fetchUserData.pending]: (state) => {
-  //     state.data = null;
-  //     state.status = 'loading';
-  //   },
-  //   [fetchUserData.fulfilled]: (state, action) => {
-  //     state.data = action.payload;
-  //     state.status = 'loaded';
-  //   },
-  //   [fetchUserData.rejected]: (state) => {
-  //     state.data = null;
-  //     state.status = 'error';
-  //   }
-  // },
+    logOut: (state, action) => {
+      // state.user = null
+      state.accessToken = null
+      state.refreshToken = null
+      localStorage.removeItem('user')
+    },
+    // setMe: (state, action) => {
+    //   const {user} = action.payload
+    //   state.user = user
+    // },
+    // deleteMe: (state, action) => {
+    //   state.user = null
+    // }
+  }
 })
 
+export const { logIn, logOut} = authSlice.actions
+
 export default authSlice.reducer
+
+// export const selectCurrentUser = (state) => state.auth.user
+export const selectAccessToken = (state) => state.auth.accessToken
