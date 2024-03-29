@@ -1,19 +1,34 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
-const meSlice = createSlice({
-  name: 'me',
-  initialState: {
-    id: null, 
-    username: null, 
+interface IMeState {
+    id: string | null
+    username: string
+    is_active: boolean
+    profile: string | null
+    followers: number | null
+    followers_count: number | null
+    subscriptions: number | null
+    subscriptions_count: number | null
+}
+
+const initialState: IMeState = {
+    id: null,
+    username: '',
     is_active: false,
     profile: null,
     followers: null,
     followers_count: null,
     subscriptions: null,
-    subscriptions_count: null,},
+    subscriptions_count: null
+}
+
+const meSlice = createSlice({
+  name: 'me',
+  initialState,
     reducers: {
       setMe: (state, action) => {
-        const {id, username, is_active, profile, followers, 
+        const {id, username, is_active, profile, followers,
           followers_count, subscriptions, subscriptions_count} = action.payload
         state.id = id
         state.username = username
@@ -24,9 +39,9 @@ const meSlice = createSlice({
         state.subscriptions = subscriptions
         state.subscriptions_count = subscriptions_count
       },
-      deleteMe: (state, action) => {
+      deleteMe: (state) => {
         state.id = null
-        state.username = null
+        state.username = ''
         state.is_active = false
         state.profile = null
         state.followers = null
@@ -41,7 +56,13 @@ export const {setMe, deleteMe} = meSlice.actions
 
 export default meSlice.reducer
 
-export const selectId = (state) => state.me.id
+const selectBase = createSelector(
+    (state: RootState) => state,
+    (state) => state.me
+)
+
+export const selectId = createSelector(selectBase, state => state.id)
+
 export const selectUsername = (state) => state.me.username
 export const selectIsActive = (state) => state.me.is_active
 export const selectProfile = (state) => state.me.profile

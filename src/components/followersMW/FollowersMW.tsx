@@ -10,13 +10,19 @@ interface FollowersMWProps {
   onSetModalClose?(): void;
 }
 
+export interface IUser {
+    id?:number
+    username?:string
+    avatar?:string
+}
+
 const FollowersMW:FC<FollowersMWProps> = ({onSetModalClose}) => {
 
   //search-block---------------------------------------------------------
 
   const interlocutorsData = getInterlocutors();
 
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchValue, setSearchValue] = useState('');
 
   const debounceSearchValue = useDeferredValue(searchValue);
 
@@ -26,7 +32,7 @@ const FollowersMW:FC<FollowersMWProps> = ({onSetModalClose}) => {
 
   const foundContent = useMemo(findUser, [debounceSearchValue]);
 
-  function findUser():[{id?:number, username?:string, avatar?:string}] | [] {
+  function findUser():IUser[] {
     if (searchValue === '') {
       return [];
     } else {
@@ -40,16 +46,16 @@ const FollowersMW:FC<FollowersMWProps> = ({onSetModalClose}) => {
 
       <div className="followers-wrapper">
         <div className="input-wrapper" style={{border: "none"}}>
-        <SearchInput  className="search__input not-absolute" 
-                      placeholder="Введите Ваш запрос..." 
-                      disabled={false} 
-                      onSetSearchValue={onSetSearchValue} 
+        <SearchInput  className="search__input not-absolute"
+                      placeholder="Введите Ваш запрос..."
+                      disabled={false}
+                      onSetSearchValue={onSetSearchValue}
                       // isPopupOpen={isPopupOpen}
                       />
         </div>
         <InterlocutorsList interlocutors={searchValue.length > 0 ? foundContent : interlocutorsData}/>
       </div>
-    
+
     </ModalWindow>
   )
 }

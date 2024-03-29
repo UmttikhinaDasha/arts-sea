@@ -1,12 +1,13 @@
 import { FC } from "react";
 import InterlocutorItem from "../interlocutorItem/InterlocutorItem";
 import "./InterlocutorLists.scss";
+import { IUser } from "../followersMW/FollowersMW";
 
 interface InterlocutorsListProps {
-  interlocutors?: [{id?:number, username?:string, avatar?:string}] | [];
+  interlocutors?: IUser[];
 }
 
-const InterlocutorsList:FC<InterlocutorsListProps> = ({interlocutors}) => { 
+const InterlocutorsList:FC<InterlocutorsListProps> = ({interlocutors}) => {
 
   const renderItems = () => {
     return interlocutors?.map(user => (
@@ -14,7 +15,7 @@ const InterlocutorsList:FC<InterlocutorsListProps> = ({interlocutors}) => {
         <InterlocutorItem username={user?.username} avatar={user?.avatar}/>
       </li>
     ))
-  } 
+  }
 
   return (
     <ul className="interlocutors-list">

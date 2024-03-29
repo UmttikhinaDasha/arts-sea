@@ -2,8 +2,8 @@ import { FC } from "react";
 import "./Chat.scss";
 
 interface ChatProps {
-  renderMsgs(): any;
-  renderInput(): any;
+  renderMsgs(): JSX.Element;
+  renderInput(): JSX.Element;
   height?: string;
 }
 

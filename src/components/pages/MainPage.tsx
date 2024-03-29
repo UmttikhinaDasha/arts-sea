@@ -6,7 +6,7 @@ import { getArts } from "../../services/ApiService";
 import Header from "../header/Header";
 import Search from "../search/Search";
 import FeedsSwitcher from "../feedsSwitcher/FeedsSwitcher";
-import Gallery from "../gallery/Gallery";
+import Gallery, { IImage } from "../gallery/Gallery";
 import ArtInfoMW from "../artInfoMW/ArtInfoMW";
 
 import { useSelector } from "react-redux";
@@ -30,29 +30,29 @@ const MainPage = () => {
     menuLinks = [{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]
   }
 
-  const imagesData = useLoaderData();
+  const imagesData:IImage[] = useLoaderData() as IImage[];
   // console.log(imagesData)
 
    //data-block-----------------------------------------------------------
    const tags = ['#uch', '#fantasy', '#modern', '#vampire', '#ciberpunk'];
    //end-data-block-------------------------------------------------------
- 
+
    //search-block---------------------------------------------------------
    const [searchValue, setSearchValue] = useState<string>('');
    const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
- 
+
    const debounceSearchValue = useDeferredValue(searchValue);
- 
+
    const onSetSearchValue = (value: string) => {
      setSearchValue(value);
    }
- 
+
    const onSetIsPopupOpen = (isOpen: boolean) => {
      setIsPopupOpen(isOpen);
    }
- 
+
    const foundContent = useMemo(findTag, [debounceSearchValue, tags]);
- 
+
    function findTag():string[] | string {
      if (debounceSearchValue === '') {
        return '';
@@ -83,8 +83,9 @@ const MainPage = () => {
         <Header menuLinks={menuLinks}/>
         <Search onSetSearchValue={onSetSearchValue}
                 onSetIsPopupOpen={onSetIsPopupOpen}
-                foundValues={foundContent} 
+                foundValues={foundContent}
                 isPopupOpen={isPopupOpen}/>
+        {/** feedsNames лучше вынести в константу или создать enum (ts) */}
         <FeedsSwitcher feedsNames={["новые работы", "популярное", "подписки"]}/>
       </header>
       <main className="main">

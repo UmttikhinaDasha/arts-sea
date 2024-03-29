@@ -6,9 +6,10 @@ import "./Menu.scss";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
 import { deleteMe } from "../../features/me/meSlice";
+import { ILink } from "../header/Header";
 
 interface MenuProps {
-  links?: [{url: string, name: string}];
+  links?: ILink[];
 }
 
 const Menu:FC<MenuProps> = (props) => {
@@ -19,9 +20,9 @@ const Menu:FC<MenuProps> = (props) => {
 
   // const [isAuth, setIsAuth] = useState<boolean>(false);
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const burgerRef = useRef(null);
-  
+  const [isOpen, setIsOpen] = useState(false);
+  const burgerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
    return () => clearAllBodyScrollLocks();
   }, []);

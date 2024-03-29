@@ -7,7 +7,7 @@ import "./CommunicationSection.scss";
 
 const CommunicationSection = () => {
 
-  const [switcher, setSwitcher] = useState<boolean>(true);
+  const [switcher, setSwitcher] = useState(true);
 
   const onSwitch = () => {
     setSwitcher(switcher => !switcher);
@@ -15,8 +15,8 @@ const CommunicationSection = () => {
 
   return (
     <div className="modal__communication-section">
-      
-      <button className="modal__toggle-comm-block-btn" tabIndex={1} onClick={e => onSwitch()}>{switcher ? "Аукцион" : "Комментарии"}</button>
+
+      <button className="modal__toggle-comm-block-btn" tabIndex={1} onClick={onSwitch}>{switcher ? "Аукцион" : "Комментарии"}</button>
 
       {
         switcher ? <CommentsSection/> : <AuctionSection mi={5} sb={50} ab={150} currency="usd"/>

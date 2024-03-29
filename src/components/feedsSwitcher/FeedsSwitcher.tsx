@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
+import { FC, MouseEvent, useState } from "react";
 import "./FeedsSwitcher.scss"
+import clsx from "clsx";
 
 interface FeedsSwitcherProps {
   feedsNames?: string[];
@@ -13,23 +14,16 @@ const FeedsSwitcher:FC<FeedsSwitcherProps> = ({feedsNames}) => {
     setActiveFeedName(feedName);
     //тут должна быть отправка запроса на получение артов по выбранному полю
   }
-  
+
   const renderBtns = () => {
 
     return (
       feedsNames?.map((feedName, i) => {
-        
-        let classNames = 'swither__feed-btn';
-
-        if (feedName === activeFeedName) {
-          classNames += ' active';
-        }
-
         return (
-          <button key={i} 
-                  className={classNames} 
+          <button key={i}
+                  className={clsx('swither__feed-btn', feedName === activeFeedName && 'active')}
                   name={feedName}
-                  onClick={e => onFeedChange(e?.target?.name)}>
+                  onClick={() => onFeedChange(feedName)}>
             {feedName.toUpperCase()}
           </button>
         )

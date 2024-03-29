@@ -2,13 +2,10 @@ import { FC } from "react";
 
 import Avatar from "../avatar/Avatar";
 import "./InterlocutorItem.scss";
+import { IUser } from "../followersMW/FollowersMW";
 
-interface InterlocutorItemProps {
-  username?: string;
-  avatar?: string;
-}
 
-const InterlocutorItem:FC<InterlocutorItemProps> = ({username, avatar}) => {
+const InterlocutorItem:FC<IUser> = ({username, avatar}) => {
 
   return (
     <div className="interlocutor__item">

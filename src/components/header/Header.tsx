@@ -4,8 +4,13 @@ import Menu from "../menu/Menu";
 import "./Header.scss";
 import { NavLink } from "react-router-dom";
 
+export interface ILink{
+    url: string
+    name: string
+}
+
 interface HeaderProps {
-  menuLinks?: [{url: string, name: string}];
+  menuLinks?: ILink[];
 }
 
 const Header:FC<HeaderProps> = ({menuLinks}) => {
@@ -17,7 +22,7 @@ const Header:FC<HeaderProps> = ({menuLinks}) => {
           <NavLink to="/" className="header__logo"  tabIndex={0}>HuntArt</NavLink>
           <Menu links={menuLinks}/>
         </div>
-      </div>        
+      </div>
     </div>
   )
 }

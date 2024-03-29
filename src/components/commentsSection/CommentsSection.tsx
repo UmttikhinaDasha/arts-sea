@@ -8,7 +8,11 @@ interface CommentsSectionProps {
   placeholder?: string;
 }
 
-const CommentsSection:FC<CommentsSectionProps> = ({height="506px", placeholder="Введите комментарий..."}) => {
+const STANDARD_HEIGHT = "506px"
+const DEFAULT_PLACEHOLDER = "Введите комментарий..."
+
+const CommentsSection:FC<CommentsSectionProps> = ({height=STANDARD_HEIGHT, placeholder=DEFAULT_PLACEHOLDER}) => {
+ const YOUR_USER_NAME = 'Имя_пользователя';
 
   const renderInput = () => {
     return  <div className="chat__input-block">
@@ -20,14 +24,12 @@ const CommentsSection:FC<CommentsSectionProps> = ({height="506px", placeholder="
 
     const comments = getComments();
 
-    const yoursUsername = 'Имя_пользователя';
-
       return (
         <ul className="chat__comments-list">
           {
             comments.map((comment) => {
               let classNames = "chat__comment";
-              if (comment.username === yoursUsername) {
+              if (comment.username === YOUR_USER_NAME) {
                 classNames += " chat__comment--yours"
               }
               return (

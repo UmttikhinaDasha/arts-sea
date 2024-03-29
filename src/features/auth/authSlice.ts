@@ -14,7 +14,7 @@ const authSlice = createSlice({
       state.refreshToken = refresh
       localStorage.setItem('user', JSON.stringify({refresh}))
     },
-    logOut: (state, action) => {
+    logOut: (state) => {
       // state.user = null
       state.accessToken = null
       state.refreshToken = null
