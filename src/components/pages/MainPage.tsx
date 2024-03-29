@@ -19,12 +19,12 @@ import "./MainPage.scss";
 const MainPage = () => {
 
   const isActive = !!localStorage.getItem('user')
-  console.log(`isActive: ${isActive}`)
+  // console.log(`isActive: ${isActive}`)
   const me = useImQuery();
   let menuLinks;
   if (isActive) {
     const id = me?.data?.id
-    console.log(`id: ${id}`)
+    // console.log(`id: ${id}`)
     menuLinks = [{url:`/users/${id}`, name:"Профиль"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}];
   } else {
     menuLinks = [{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]

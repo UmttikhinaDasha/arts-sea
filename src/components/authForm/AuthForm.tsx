@@ -73,7 +73,7 @@ const AuthForm = () => {
 
         <input type="submit" className="submit-btn"/>
         {/* {isSubmitSuccessful && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Данные успешно отправлены</p>} */}
-        {isFetching && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Загрузка...</p>}
+        {/*{isFetching && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Загрузка...</p>}*/}
         {error && <p style={{textAlign: "center", margin: "10px auto", fontWeight: "700"}}>Неверный логин или пароль</p>}
       </form>
       <NavLink to="/registration" className="auth_link">Нет профиля? <span>Зарегистрируйтесь</span></NavLink>

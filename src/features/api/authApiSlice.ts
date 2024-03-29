@@ -23,7 +23,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: credentials => ({
         url: 'users/im/',
         method: 'PATCH',
-        body: {...credentials}
+        body: {...credentials},
+        // formData: true,
+        // headers: {
+        //   'content-type': 'multipart/form-data',
+        // },
       })
     }),
   })

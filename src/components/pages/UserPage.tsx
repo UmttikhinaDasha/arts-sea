@@ -1,4 +1,4 @@
-import { useState, useDeferredValue} from "react";
+import { useState, useDeferredValue, useEffect} from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 
 import { getUserById } from "../../services/ApiService";
@@ -33,41 +33,57 @@ type User = {
 export const UserPage = () => {
 
   const dispatch = useDispatch();
-
   let {userId} = useParams();
-  console.log(userId);
-
-  const isActive = !!localStorage.getItem('user')
-  console.log(`isActive: ${isActive}`)
   const me = useImQuery();
-  if (me) {
-    console.log(me?.data)
-    dispatch(setMe(me?.data))
-  }
+  // const myId = useSelector(selectId)
+  // let myId = useSelector(selectId)
 
-  let menuLinks, myId;
-  let isMine = false;
+  const [isActive, setIsActive] = useState(!!localStorage.getItem('user'))
+  const [menuLinks, setMenuLinks] = useState([{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]);
+  const [myId, setMyId] = useState(me?.data?.id)
+  const [isMine, setIsMine] = useState(false)
 
-  if (isActive) {
-    myId = me?.data?.id
-    console.log(`id: ${myId}`)
+  // if (typeof me.data != 'undefined') {
+  //   // console.log('me')
+  //   // console.log(me?.data)
+  //   console.log('if')
+  //   dispatch(setMe(me?.data))
+  //   myId = me?.data?.id
+  // }
 
-    if (userId == myId) {
-      isMine = true;
-      menuLinks = [{url:`/`, name:"Главная"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}];
-    } else {
-      menuLinks = [{url:`/`, name:"Главная"}, {url:`/users/${myId}`, name:"Профиль"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}];
+  useEffect(() => {
+    if (typeof me.data != 'undefined') {
+      // console.log('me')
+      // console.log(me?.data)
+      // console.log('first useEffect')
+      dispatch(setMe(me?.data))
+      setMyId(me?.data?.id)
     }
-  } else {
-    menuLinks = [{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}]
-  }
+  }, [])
+
+  useEffect(() => {
+    if (isActive) {
+      // setMyId(me?.data?.id)
+      console.log(`id: ${myId}`)
+  
+      if (userId == myId) {
+        setIsMine(true);
+        setMenuLinks([{url:`/`, name:"Главная"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}]);
+      } else {
+        setMenuLinks([{url:`/`, name:"Главная"}, {url:`/users/${myId}`, name:"Профиль"}, {url:"/messanger", name:"Сообщения"}, {url:"/", name:"Выход"}]);
+      }
+    } else {
+      setMenuLinks([{url:"/auth", name:"Вход"}, {url:"/registration", name:"Регистрация"}])
+    }
+  }, [isActive])
+
 
   const {data: user, isFetching} = useGetUserQuery(userId);
-  console.log(user)
+  // console.log(user)
 
   
-  // const userData = useLoaderData();
-  // console.log(userData.arts)
+  const userData = useLoaderData();
+  console.log(userData?.arts)
 
   //modal-block----------------------------------------------------------
   const [modalClose, setModalClose] = useState<boolean>(true);
@@ -134,7 +150,7 @@ export const UserPage = () => {
         <UserInfoSection isMine={isMine} user={user} onSetModalOpen={onSetPriceListModalOpen} onSetPublishModalOpen={onSetPublishModalOpen} onSetFollowersModalOpen={onSetFollowersModalOpen} onSetProfileModalOpen={onSetProfileModalOpen}/>
       </header>
       <main className="main" style={{paddingTop: "0px"}}>
-        {/* <Gallery onSetModalOpen={onSetModalOpen} images={userData?.arts}/> */}
+        <Gallery onSetModalOpen={onSetModalOpen} images={userData?.arts}/>
         {modalClose ? null : <ArtInfoMW imgSrc={debounceImgSrc} onSetModalClose={onSetModalClose}/>}
         {publishModalClose ? null : <PublishMW onSetModalClose={onSetPublishModalClose}/>}
         {priceListModalClose ? null : <PriceList onSetModalClose={onSetPriceListModalClose}/>}
@@ -145,9 +161,10 @@ export const UserPage = () => {
   )
 }
 
-// export function loader({params}) {
-//   const id = params?.userId;
-//   console.log("loader " + id);
-//   // const { data: post, isFetching, isSuccess } = useGetUserQuery(id);
-//   return id;
-// }
+export function loader({params}) {
+  const id = params?.userId;
+  console.log("loader " + id);
+
+  // const { data: post, isFetching, isSuccess } = useGetUserQuery(id);
+  return getUserById('2');
+}

@@ -37,7 +37,11 @@ const SettingProfileMW:FC<SettingProfileMWProps> = ({onSetModalClose}) => {
 
   const update = async (newProfile) => {
     try {
-      console.log(newProfile)
+      // console.log(newProfile)
+    //   for (let pair of newProfile.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+
       const userData = await updateProfile(newProfile).unwrap()
       console.log("userData")
       console.log(userData)
@@ -55,24 +59,65 @@ const SettingProfileMW:FC<SettingProfileMWProps> = ({onSetModalClose}) => {
   }
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    // console.log(selectedAvatar)
-    // console.log(selectedWallpaper)
-    // console.log(data)
-    const newProfile = {
-      // username,
+
+    // const formData = new FormData();
+    // formData.append('description', data.description);
+    // formData.append('avatar', selectedAvatar);
+    // formData.append('wallpaper', selectedWallpaper);
+
+    // for (let pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+
+    // update(formData)
+
+     const newProfile = {
+      username,
       profile: {
         description: data.description,
         avatar: selectedAvatar,
         wallpaper: selectedWallpaper
       }
     }
-    console.log(newProfile)
-
-    // const formData = new FormData();
-    // Object.keys(newProfile).forEach(key => formData.append(key, newProfile[key]));
-
     update(newProfile)
-    
+
+    // console.log(selectedAvatar)
+    // console.log(selectedWallpaper)
+    // console.log(data)
+    // const newProfile = {
+    //   // username,
+    //   profile: {
+    //     description: data.description,
+    //     avatar: selectedAvatar,
+    //     wallpaper: selectedWallpaper
+    //   }
+    // }
+    // console.log(newProfile)
+    // update(data)
+
+    // Create a test FormData object
+    // const formData = new FormData();
+    // formData.append('key1', 'value1');
+    // formData.append('key2', 'value2');
+
+    // // Display the key/value pairs
+    // for (let pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+
+    // const newProfile = {
+    //   description: data.description,
+    //   avatar: selectedAvatar,
+    //   wallpaper: selectedWallpaper
+    // }
+    // const newProfileJSON = JSON.stringify(newProfile);
+
+    // const formData = new FormData(settingForm);
+    // formData.append('profile', newProfileJSON);
+    // let formData = new FormData();
+    // formData.append("username", "Groucho");
+    // Object.keys(newProfile).forEach(key => formData.append(key, newProfile[key]));
+    // console.log(formData)
   };
 
   //for avatar
@@ -105,7 +150,7 @@ const SettingProfileMW:FC<SettingProfileMWProps> = ({onSetModalClose}) => {
 
   return (
     <ModalWindow onSetModalClose={onSetModalClose}>
-      <form onSubmit={handleSubmit(onSubmit)} className="publish-form">
+      <form onSubmit={handleSubmit(onSubmit)} className="publish-form" id="settingForm">
         <div className="publish-form__file-picker">
           <button onClick={handlePickAvatar} className="pick-file-btn" type="button">Выберите файл для аватара</button>
           <input

@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 
 import ErrorPage from './components/pages/ErrorPage';
 import MainPage, {loader as artsLoader} from './components/pages/MainPage';
-import {UserPage,/* loader as userLoader*/} from "./components/pages/UserPage";
+import {UserPage, loader as userLoader} from "./components/pages/UserPage";
 import {MessangerPage, loader as msgsLoader} from "./components/pages/MessangerPage";
 import AuthPage from "./components/pages/AuthPage";
 import RegisterPage from "./components/pages/RegisterPage";
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     path: "users/:userId",
     element: <UserPage />,
     errorElement: <ErrorPage/>,
-    // loader: userLoader,
+    loader: userLoader,
   },
   {
     path: "messanger",
